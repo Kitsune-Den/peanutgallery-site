@@ -10,6 +10,12 @@
 <meta property="og:description" content="An AI co-host that watches your stream, heckles your plays and cheers your wins. Coming soon from Kitsune Den.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://peanutgallery.gg/">
+<meta property="og:image" content="https://peanutgallery.gg/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Peanut Gallery: Peanut the fox, Mochi the tanuki, Vex the crow, Quill the owl and Wisp the ghost">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://peanutgallery.gg/og.png">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -121,12 +127,72 @@
   footer { padding: 80px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
   footer strong { color: var(--ink); }
 
+  /* Call to action */
+  .cta {
+    display: inline-block; margin: 14px 0 0 10px; padding: 10px 20px; border-radius: 999px;
+    background: var(--peanut); color: #1b130d; font-weight: 800; font-size: 15px; text-decoration: none;
+  }
+  .cta:hover, .cta:focus-visible { background: var(--ember); }
+
+  /* Voice samples on the cards */
+  .hear {
+    margin-top: 12px; padding: 7px 12px; border-radius: 999px; cursor: pointer;
+    border: 1px solid color-mix(in srgb, var(--c) 55%, transparent); background: transparent;
+    color: var(--ink); font: 700 13px/1 "Nunito", sans-serif;
+  }
+  .hear:hover, .hear:focus-visible, .hear[aria-pressed="true"] { background: color-mix(in srgb, var(--c) 22%, transparent); }
+  .said { min-height: 1.4em; margin-top: 8px !important; font-size: 13px !important; font-style: italic; color: var(--ink) !important; }
+
+  /* Pricing */
+  .tiers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 32px; }
+  .tier { padding: 22px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); display: flex; flex-direction: column; }
+  .tier.pick { border-color: rgba(242, 140, 56, 0.55); box-shadow: 0 0 0 1px rgba(242, 140, 56, 0.25) inset; }
+  .tier .tag { align-self: flex-start; margin-bottom: 8px; padding: 2px 9px; border-radius: 999px; background: rgba(242, 140, 56, 0.16); color: var(--ember); font-size: 12px; font-weight: 800; letter-spacing: 0.04em; }
+  .tier h3 { font-size: 21px; font-weight: 600; }
+  .tier .price { margin-top: 6px; font: 700 34px/1 "Fredoka", sans-serif; }
+  .tier .price small { font: 600 14px/1 "Nunito", sans-serif; color: var(--muted); }
+  .tier ul { margin: 14px 0 0 18px; font-size: 15px; color: var(--muted); }
+  .tier li + li { margin-top: 6px; }
+  .tier .trial { margin-top: auto; padding-top: 14px; font-size: 14px; color: var(--ink); font-weight: 700; }
+  .fine { margin-top: 14px; text-align: center; font-size: 13px; color: var(--muted); }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 28px auto 0; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 14px 4px; }
+  .faq summary { cursor: pointer; font: 600 18px/1.35 "Fredoka", sans-serif; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::before { content: "+"; display: inline-block; width: 1.2em; color: var(--ember); }
+  .faq details[open] summary::before { content: "\2212"; }
+  .faq p { margin: 8px 0 0 1.2em; color: var(--muted); font-size: 16px; }
+
+  /* Waitlist */
+  .wl { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 620px; margin: 26px auto 0; }
+  .wl input {
+    flex: 1 1 240px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--bg-2); color: var(--ink); font: 16px "Nunito", sans-serif;
+  }
+  .wl input:focus { outline: 2px solid var(--peanut); outline-offset: 1px; }
+  .wl button {
+    flex: 0 0 auto; padding: 12px 22px; border: 0; border-radius: 12px; cursor: pointer;
+    background: var(--peanut); color: #1b130d; font: 800 16px "Nunito", sans-serif;
+  }
+  .wl button:hover, .wl button:focus-visible { background: var(--ember); }
+  .wl button[disabled] { opacity: 0.6; cursor: wait; }
+  .wl-msg { flex-basis: 100%; min-height: 1.5em; text-align: center; font-weight: 700; }
+  .wl-msg.ok { color: #9cc39a; }
+  .wl-msg.err { color: #ff8a7a; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
   @media (max-width: 900px) {
+    .tiers { grid-template-columns: repeat(2, 1fr); }
     .gallery { grid-template-columns: repeat(2, 1fr); }
     .gallery .card:last-child { grid-column: span 2; }
     .steps { grid-template-columns: 1fr; }
   }
   @media (max-width: 520px) {
+    .tiers { grid-template-columns: 1fr; }
+    .cta { margin-left: 0; }
     header { padding-top: 48px; }
     .gallery { grid-template-columns: 1fr; }
     .gallery .card:last-child { grid-column: auto; }
@@ -146,6 +212,7 @@
     <h1>Peanut <span>Gallery</span></h1>
     <p class="tagline">Your AI cov-host. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay.</p>
     <div class="soon"><i aria-hidden="true"></i> Coming soon from Kitsune Den</div>
+    <a class="cta" href="#waitlist">Join the waitlist</a>
 
     <div class="stream" aria-label="Example: a co-host reacting on a stream overlay">
       <div class="live">LIVE</div>
@@ -174,11 +241,11 @@
     <h2>Meet the gallery</h2>
     <p class="lead">Pick the co-host that fits your stream, or bring your own. Each one has a voice, a look and opinions.</p>
     <div class="gallery">
-      <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.webp)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p></div>
-      <div class="card" style="--c:#9cc39a"><div class="dot pic" style="background-image:url(/gallery/mochi.webp)" role="img" aria-label="Mochi"></div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p></div>
-      <div class="card" style="--c:#a78bfa"><div class="dot pic" style="background-image:url(/gallery/vex.webp)" role="img" aria-label="Vex"></div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p></div>
-      <div class="card" style="--c:#5fb3b3"><div class="dot pic" style="background-image:url(/gallery/quill.webp)" role="img" aria-label="Quill"></div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p></div>
-      <div class="card" style="--c:#7cc8ff"><div class="dot pic" style="background-image:url(/gallery/wisp.webp)" role="img" aria-label="Wisp"></div><h3>Wisp</h3><div class="kind">Ghost · horror</div><p>A ghost who's scared of everything. Panics so you don't have to.</p></div>
+      <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.webp)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p><button class="hear" type="button" data-persona="peanut" aria-pressed="false">&#9654; Hear Peanut</button><p class="said" aria-live="polite"></p></div>
+      <div class="card" style="--c:#9cc39a"><div class="dot pic" style="background-image:url(/gallery/mochi.webp)" role="img" aria-label="Mochi"></div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p><button class="hear" type="button" data-persona="mochi" aria-pressed="false">&#9654; Hear Mochi</button><p class="said" aria-live="polite"></p></div>
+      <div class="card" style="--c:#a78bfa"><div class="dot pic" style="background-image:url(/gallery/vex.webp)" role="img" aria-label="Vex"></div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p><button class="hear" type="button" data-persona="vex" aria-pressed="false">&#9654; Hear Vex</button><p class="said" aria-live="polite"></p></div>
+      <div class="card" style="--c:#5fb3b3"><div class="dot pic" style="background-image:url(/gallery/quill.webp)" role="img" aria-label="Quill"></div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p><button class="hear" type="button" data-persona="quill" aria-pressed="false">&#9654; Hear Quill</button><p class="said" aria-live="polite"></p></div>
+      <div class="card" style="--c:#7cc8ff"><div class="dot pic" style="background-image:url(/gallery/wisp.webp)" role="img" aria-label="Wisp"></div><h3>Wisp</h3><div class="kind">Ghost · horror</div><p>A ghost who's scared of everything. Panics so you don't have to.</p><button class="hear" type="button" data-persona="wisp" aria-pressed="false">&#9654; Hear Wisp</button><p class="said" aria-live="polite"></p></div>
     </div>
   </section>
 
@@ -189,6 +256,81 @@
       <div class="step"><div class="n">02 · LISTENS</div><h3>Hears you and chat</h3><p>Hold a hotkey and talk to it, or let chat, raids and redeems set it off.</p></div>
       <div class="step"><div class="n">03 · TALKS BACK</div><h3>Answers out loud</h3><p>A real voice and an animated overlay, with a panic mute one key away.</p></div>
     </div>
+  </section>
+
+  <section class="wrap" id="pricing">
+    <h2>Pricing</h2>
+    <p class="lead">Start free. Pay when you want the full co-host watching, listening and talking back.</p>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Free</h3>
+        <div class="price">$0</div>
+        <ul>
+          <li>Reactions mode: the gallery answers follows, raids, subs and chat commands with ready-made voiced lines</li>
+          <li>Chat text-to-speech in a standard voice, with filters you control</li>
+          <li>The animated overlay for OBS</li>
+        </ul>
+        <p class="trial">Plus 3 free hours of the full AI co-host</p>
+      </div>
+      <div class="tier">
+        <h3>Bring your own AI</h3>
+        <div class="price">$2.99 <small>/ month</small></div>
+        <ul>
+          <li>Your own AI key or local model does the thinking</li>
+          <li>We read the screen, check every line and give it a voice</li>
+          <li>All five gallery voices, for the co-host and for chat text-to-speech</li>
+        </ul>
+      </div>
+      <div class="tier pick">
+        <span class="tag">MOST STREAMERS</span>
+        <h3>Hosted</h3>
+        <div class="price">$9.99 <small>/ month</small></div>
+        <ul>
+          <li>Our AI, nothing to set up</li>
+          <li>The full co-host: watches your stream, hears you, talks back</li>
+          <li>All five gallery voices</li>
+          <li>A monthly usage cap</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <h3>Professional</h3>
+        <div class="price">$19.99 <small>/ month</small></div>
+        <ul>
+          <li>Everything in Hosted</li>
+          <li>A much higher monthly cap</li>
+          <li>For streamers who are live most days</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Planned pricing in USD; it may change before launch. One free trial per Twitch channel.</p>
+  </section>
+
+  <section class="wrap" id="faq">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details><summary>What do I need to run it?</summary><p>A PC running OBS Studio. Peanut Gallery is a small desktop app that sits next to OBS, and the co-host appears as a Browser Source in your scenes.</p></details>
+      <details><summary>Will it slow down my stream?</summary><p>It shouldn't. Your PC only takes the odd screenshot, plays the audio and shows the overlay. The heavy work (reading the screen, thinking, making the voice) happens on our servers, because your PC is busy enough already.</p></details>
+      <details><summary>Which platforms does it work with?</summary><p>Twitch at launch: it reads your chat, follows, raids, subs and channel-point redemptions. The overlay works in any OBS scene.</p></details>
+      <details><summary>What does it see, and do you keep it?</summary><p>A screenshot of your stream every 15 to 30 seconds, sent to our screen-reading service so the co-host knows what's happening. We don't store them. A "blind" switch pauses capture whenever something private is on screen.</p></details>
+      <details><summary>Can chat make it say anything?</summary><p>No. Chat is something the co-host reacts to, not a script it reads. Chat text-to-speech is off until you turn it on, works only through a channel-point reward or a command you choose, and every message is filtered, length-capped and rate-limited. Everything the co-host says passes a safety filter first, and a panic-mute hotkey silences it instantly.</p></details>
+      <details><summary>Can I make my own co-host?</summary><p>Yes. Each co-host is a folder with a personality, a voice and art, so you can tweak one of the five or build your own.</p></details>
+      <details><summary>Does it work in Discord?</summary><p>Not at launch. A Kitsune Den Discord bot that brings your co-host into voice chat and keeps it around between streams is planned for later.</p></details>
+      <details><summary>When can I use it?</summary><p>Soon. Join the waitlist below and we'll email you when it opens.</p></details>
+    </div>
+  </section>
+
+  <section class="wrap" id="waitlist">
+    <h2>Get in early</h2>
+    <p class="lead">Join the waitlist and we'll tell you when Peanut Gallery opens. We'll only use your email for that.</p>
+    <form class="wl" id="wl" novalidate>
+      <label class="sr" for="wl-email">Email</label>
+      <input id="wl-email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com">
+      <label class="sr" for="wl-channel">Your channel (optional)</label>
+      <input id="wl-channel" name="channel" type="text" maxlength="80" placeholder="Your channel (optional)">
+      <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+      <button type="submit">Join the waitlist</button>
+      <p class="wl-msg" role="status" aria-live="polite"></p>
+    </form>
   </section>
 
   <footer class="wrap">
@@ -244,6 +386,73 @@
     show(l);
     type(l.text, next);
   })();
+
+  // Voice samples: each "Hear" button plays that co-host's next clip.
+  const VOICES = {"peanut": [{"src": "/voices/peanut-1.mp3", "text": "Hi! I'm Peanut. Let's see what we're playing today!"}, {"src": "/voices/peanut-2.mp3", "text": "Wait, what's that shiny thing? Go back!"}, {"src": "/voices/peanut-3.mp3", "text": "You did it! I knew you would. Mostly."}], "mochi": [{"src": "/voices/mochi-1.mp3", "text": "Hello, friend. I made tea. Let's play something nice."}, {"src": "/voices/mochi-2.mp3", "text": "A tiny win! Those are my favourite kind."}, {"src": "/voices/mochi-3.mp3", "text": "Oh no, the crops... it's okay, we'll replant."}], "vex": [{"src": "/voices/vex-1.mp3", "text": "Bold of you to reload in the open."}, {"src": "/voices/vex-2.mp3", "text": "That hitbox is a crime. I'm calling the police."}, {"src": "/voices/vex-3.mp3", "text": "Chat, write that down. That was actually good."}], "quill": [{"src": "/voices/quill-1.mp3", "text": "Good evening. Quill here, notebook ready. Let's see what we learn tonight."}, {"src": "/voices/quill-2.mp3", "text": "Fun fact: that boss is weak to fire. You have fire."}, {"src": "/voices/quill-3.mp3", "text": "Bold strategy. Statistically, a bad one."}], "wisp": [{"src": "/voices/wisp-1.mp3", "text": "Don't go down there. I'm a ghost and I wouldn't go down there."}, {"src": "/voices/wisp-2.mp3", "text": "WHAT WAS THAT. Was that me? I think that was me."}, {"src": "/voices/wisp-3.mp3", "text": "We survived! Well, you did. I'm already dead."}]};
+  const player = new Audio();
+  let playing = null;
+  const turn = {};
+  function stopVoice() {
+    player.pause();
+    if (playing) {
+      playing.setAttribute("aria-pressed", "false");
+      playing.innerHTML = playing.dataset.label;
+      playing = null;
+    }
+  }
+  document.querySelectorAll(".hear").forEach((btn) => {
+    btn.dataset.label = btn.innerHTML;
+    btn.addEventListener("click", () => {
+      const was = playing;
+      stopVoice();
+      if (was === btn) return;
+      const id = btn.dataset.persona;
+      const clips = VOICES[id];
+      const clip = clips[(turn[id] = ((turn[id] ?? -1) + 1) % clips.length)];
+      btn.nextElementSibling.textContent = "\u201c" + clip.text + "\u201d";
+      player.src = clip.src;
+      player.play().catch(() => {});
+      playing = btn;
+      btn.setAttribute("aria-pressed", "true");
+      btn.innerHTML = "&#9632; Stop";
+    });
+  });
+  player.addEventListener("ended", stopVoice);
+
+  // Waitlist form.
+  const form = $("wl");
+  const msg = form.querySelector(".wl-msg");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    msg.className = "wl-msg";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      msg.textContent = "That email doesn't look right.";
+      msg.classList.add("err");
+      form.email.focus();
+      return;
+    }
+    const btn = form.querySelector("button");
+    btn.disabled = true;
+    msg.textContent = "Adding you...";
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email, channel: form.channel.value.trim(), website: form.website.value }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Something went wrong. Try again in a bit.");
+      form.reset();
+      msg.textContent = "You're on the list. Peanut will be in touch!";
+      msg.classList.add("ok");
+    } catch (err) {
+      msg.textContent = err.message === "Failed to fetch" ? "Couldn't reach us. Try again in a bit." : err.message;
+      msg.classList.add("err");
+    } finally {
+      btn.disabled = false;
+    }
+  });
 </script>
 </body>
 </html>
