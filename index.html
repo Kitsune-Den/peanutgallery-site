@@ -92,6 +92,13 @@
   .cursor { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em; background: var(--accent, var(--peanut)); animation: blink 0.9s steps(2) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
+  /* Demo video */
+  .demo {
+    margin: 32px auto 0; max-width: 880px; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line); background: #121118; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  }
+  .demo video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }
+
   /* Sections */
   section { padding: 72px 0 0; }
   h2 { font-size: clamp(28px, 4vw, 38px); font-weight: 600; text-align: center; }
@@ -152,15 +159,26 @@
     </div>
   </header>
 
+  <section class="wrap" id="demo">
+    <h2>Hear the gallery</h2>
+    <p class="lead">The real overlay and the real voices: all five co-hosts in two minutes. Sound on.</p>
+    <div class="demo">
+      <video controls preload="none" playsinline poster="/demo-poster.webp" width="1920" height="1080">
+        <source src="/peanut-gallery-demo.mp4" type="video/mp4">
+        Your browser can't play this video. <a href="/peanut-gallery-demo.mp4">Download it instead.</a>
+      </video>
+    </div>
+  </section>
+
   <section class="wrap" id="gallery">
     <h2>Meet the gallery</h2>
     <p class="lead">Pick the co-host that fits your stream, or bring your own. Each one has a voice, a look and opinions.</p>
     <div class="gallery">
       <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.webp)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p></div>
-      <div class="card" style="--c:#9cc39a"><div class="dot">M</div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p></div>
-      <div class="card" style="--c:#a78bfa"><div class="dot">V</div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p></div>
-      <div class="card" style="--c:#5fb3b3"><div class="dot">Q</div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p></div>
-      <div class="card" style="--c:#7cc8ff"><div class="dot">W</div><h3>Wisp</h3><div class="kind">Ghost · horror</div><p>A ghost who's scared of everything. Panics so you don't have to.</p></div>
+      <div class="card" style="--c:#9cc39a"><div class="dot pic" style="background-image:url(/gallery/mochi.webp)" role="img" aria-label="Mochi"></div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p></div>
+      <div class="card" style="--c:#a78bfa"><div class="dot pic" style="background-image:url(/gallery/vex.webp)" role="img" aria-label="Vex"></div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p></div>
+      <div class="card" style="--c:#5fb3b3"><div class="dot pic" style="background-image:url(/gallery/quill.webp)" role="img" aria-label="Quill"></div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p></div>
+      <div class="card" style="--c:#7cc8ff"><div class="dot pic" style="background-image:url(/gallery/wisp.webp)" role="img" aria-label="Wisp"></div><h3>Wisp</h3><div class="kind">Ghost · horror</div><p>A ghost who's scared of everything. Panics so you don't have to.</p></div>
     </div>
   </section>
 
@@ -182,10 +200,10 @@
   // Cycle the mock overlay through lines from the gallery.
   const lines = [
     { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.webp", text: "Wait, what's that shiny thing? Go back!" },
-    { name: "Vex", kind: "backseat crow", c: "#a78bfa", text: "Bold of you to reload in the open." },
-    { name: "Wisp", kind: "scared of everything", c: "#7cc8ff", text: "Don't go down there. I'm a ghost and I wouldn't go down there." },
-    { name: "Mochi", kind: "cozy tanuki", c: "#9cc39a", text: "Look at your little garden. It's thriving." },
-    { name: "Quill", kind: "lore owl", c: "#5fb3b3", text: "Fun fact: that boss is weak to fire. You have fire." },
+    { name: "Vex", kind: "backseat crow", c: "#a78bfa", img: "/gallery/vex.webp", text: "Bold of you to reload in the open." },
+    { name: "Wisp", kind: "scared of everything", c: "#7cc8ff", img: "/gallery/wisp.webp", text: "Don't go down there. I'm a ghost and I wouldn't go down there." },
+    { name: "Mochi", kind: "cozy tanuki", c: "#9cc39a", img: "/gallery/mochi.webp", text: "Look at your little garden. It's thriving." },
+    { name: "Quill", kind: "lore owl", c: "#5fb3b3", img: "/gallery/quill.webp", text: "Fun fact: that boss is weak to fire. You have fire." },
     { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.webp", text: "You did it! I knew you would. Mostly." },
   ];
   const $ = (id) => document.getElementById(id);
