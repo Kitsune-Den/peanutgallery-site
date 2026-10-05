@@ -135,7 +135,7 @@
 </head>
 <body>
   <header class="wrap">
-    <img class="mascot" src="/peanut.png" width="240" height="240" alt="Peanut, the fox">
+    <img class="mascot" src="/peanut.webp" width="240" height="240" alt="Peanut, the fox">
     <h1>Peanut <span>Gallery</span></h1>
     <p class="tagline">Your AI cov-host. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay.</p>
     <div class="soon"><i aria-hidden="true"></i> Coming soon from Kitsune Den</div>
@@ -144,7 +144,7 @@
       <div class="live">LIVE</div>
       <div class="overlay">
         <div class="who">
-          <div class="avatar pic" id="avatar" style="background-image:url(/peanut.png)">P</div>
+          <div class="avatar pic" id="avatar" style="background-image:url(/peanut.webp)">P</div>
           <div><b id="name">Peanut</b><small id="kind">the fox in your peanut gallery</small></div>
         </div>
         <div class="bubble" aria-live="polite"><span id="line"></span><span class="cursor" aria-hidden="true"></span></div>
@@ -156,7 +156,7 @@
     <h2>Meet the gallery</h2>
     <p class="lead">Pick the co-host that fits your stream, or bring your own. Each one has a voice, a look and opinions.</p>
     <div class="gallery">
-      <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.png)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p></div>
+      <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.webp)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p></div>
       <div class="card" style="--c:#9cc39a"><div class="dot">M</div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p></div>
       <div class="card" style="--c:#a78bfa"><div class="dot">V</div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p></div>
       <div class="card" style="--c:#5fb3b3"><div class="dot">Q</div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p></div>
@@ -181,12 +181,12 @@
 <script>
   // Cycle the mock overlay through lines from the gallery.
   const lines = [
-    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.png", text: "Wait, what's that shiny thing? Go back!" },
+    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.webp", text: "Wait, what's that shiny thing? Go back!" },
     { name: "Vex", kind: "backseat crow", c: "#a78bfa", text: "Bold of you to reload in the open." },
     { name: "Wisp", kind: "scared of everything", c: "#7cc8ff", text: "Don't go down there. I'm a ghost and I wouldn't go down there." },
     { name: "Mochi", kind: "cozy tanuki", c: "#9cc39a", text: "Look at your little garden. It's thriving." },
     { name: "Quill", kind: "lore owl", c: "#5fb3b3", text: "Fun fact: that boss is weak to fire. You have fire." },
-    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.png", text: "You did it! I knew you would. Mostly." },
+    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.webp", text: "You did it! I knew you would. Mostly." },
   ];
   const $ = (id) => document.getElementById(id);
   const stream = document.querySelector(".stream");

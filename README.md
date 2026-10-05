@@ -2,7 +2,7 @@
 
 The coming-soon page for **Peanut Gallery**, your AI cov-host by Kitsune Den.
 
-A single static page (`index.html`, `favicon.svg`, `peanut.png`), no build step
+A single static page (`index.html`, `favicon.svg`, `peanut.webp`), no build step
 and no tracking. It loads the Fredoka and Nunito fonts from Google Fonts.
 
 The app itself lives in a private repo; this repo is only the public site.
