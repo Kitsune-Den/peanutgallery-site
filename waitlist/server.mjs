@@ -1,8 +1,10 @@
-// Peanut Gallery waitlist: one POST endpoint that stores an email in SQLite.
+// Peanut Gallery waitlist and founding-streamer applications, in SQLite.
 // No dependencies; Node 24's built-in node:sqlite. Emails never leave this box.
 //
-//   POST /waitlist  {email, channel?, website?}  -> 200 {ok:true}
-//   GET  /healthz                                -> 200 ok
+//   POST /waitlist  {email, channel?, website?}                   -> 200 {ok:true}
+//   POST /apply     {email, channel, platform, schedule, content?, why, website?}
+//                   (also adds the email to the waitlist)          -> 200 {ok:true}
+//   GET  /healthz                                                 -> 200 ok
 //
 // Coolify serves it at peanutgallery.gg/api and strips the /api prefix,
 // so both /waitlist and /api/waitlist are accepted.
@@ -16,7 +18,7 @@ const ORIGINS = new Set(
   (process.env.ALLOWED_ORIGINS || "https://peanutgallery.gg,https://www.peanutgallery.gg")
     .split(",").map((s) => s.trim()).filter(Boolean),
 );
-const MAX_BODY = 2048;
+const MAX_BODY = 4096;
 const PER_IP_PER_HOUR = 5;
 
 const db = new DatabaseSync(DB_PATH);
@@ -26,7 +28,26 @@ db.exec(`CREATE TABLE IF NOT EXISTS signups (
   channel TEXT,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
 )`);
+db.exec(`CREATE TABLE IF NOT EXISTS applications (
+  id INTEGER PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  channel TEXT NOT NULL,
+  platform TEXT NOT NULL,
+  schedule TEXT NOT NULL,
+  content TEXT,
+  why TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now')),
+  updated_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now'))
+)`);
 const insert = db.prepare("INSERT OR IGNORE INTO signups (email, channel) VALUES (?, ?)");
+// Applying again with the same email replaces the earlier answers.
+const apply = db.prepare(`INSERT INTO applications (email, channel, platform, schedule, content, why)
+  VALUES (?, ?, ?, ?, ?, ?)
+  ON CONFLICT(email) DO UPDATE SET channel = excluded.channel, platform = excluded.platform,
+    schedule = excluded.schedule, content = excluded.content, why = excluded.why,
+    updated_at = strftime('%Y-%m-%dT%H:%M:%SZ', 'now')`);
+const PLATFORMS = new Set(["twitch", "youtube", "kick", "other"]);
+const SCHEDULES = new Set(["1-2", "3-4", "5+"]);
 
 // Rough on purpose: stops one address hammering the form, nothing more.
 const hits = new Map();
@@ -73,7 +94,7 @@ function parse(req, raw) {
 const server = createServer(async (req, res) => {
   const path = (req.url || "/").split("?")[0].replace(/^\/api/, "") || "/";
   if (req.method === "GET" && path === "/healthz") return send(res, 200, { ok: true });
-  if (path !== "/waitlist") return send(res, 404, { error: "not found" });
+  if (path !== "/waitlist" && path !== "/apply") return send(res, 404, { error: "not found" });
   if (req.method !== "POST") return send(res, 405, { error: "method not allowed" });
   if (!ORIGINS.has(req.headers.origin || "")) return send(res, 403, { error: "forbidden" });
 
@@ -96,6 +117,18 @@ const server = createServer(async (req, res) => {
   const channel = String(form.channel || "").trim().slice(0, 80) || null;
   if (email.length > 254 || !EMAIL.test(email)) {
     return send(res, 400, { error: "That email doesn't look right." });
+  }
+  if (path === "/apply") {
+    const text = (k, max) => String(form[k] || "").trim().slice(0, max);
+    const platform = text("platform", 20);
+    const schedule = text("schedule", 10);
+    const why = text("why", 600);
+    if (!channel) return send(res, 400, { error: "Tell us where you stream." });
+    if (!PLATFORMS.has(platform) || !SCHEDULES.has(schedule)) {
+      return send(res, 400, { error: "Pick a platform and how often you stream." });
+    }
+    if (why.length < 10) return send(res, 400, { error: "Tell us a little about why you'd like to try it." });
+    apply.run(email, channel, platform, schedule, text("content", 200) || null, why);
   }
   insert.run(email, channel);
   // Same answer whether or not the email was already on the list.
