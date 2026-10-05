@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peanut Gallery · your AI cov-host</title>
+<meta name="description" content="Peanut Gallery is an AI co-host for streamers. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay. Coming soon from Kitsune Den.">
+<meta name="theme-color" content="#17110d">
+<meta property="og:title" content="Peanut Gallery · your AI cov-host">
+<meta property="og:description" content="An AI co-host that watches your stream, heckles your plays and cheers your wins. Coming soon from Kitsune Den.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://peanutgallery.gg/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #17110d;
+    --bg-2: #211913;
+    --bg-3: #2d231b;
+    --ink: #fff4e6;
+    --muted: #c4b3a1;
+    --peanut: #d99a55;
+    --ember: #f28c38;
+    --line: rgba(255, 244, 230, 0.1);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(242, 140, 56, 0.16), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3, .display { font-family: "Fredoka", "Nunito", system-ui, sans-serif; letter-spacing: -0.01em; }
+
+  /* Hero */
+  header { padding: 72px 0 40px; text-align: center; }
+  .mascot { display: block; width: 240px; height: 240px; margin: 0 auto 8px; filter: drop-shadow(0 16px 40px rgba(242, 140, 56, 0.28)); animation: bob 4s ease-in-out infinite;
+    -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 98%); mask-image: linear-gradient(to bottom, #000 72%, transparent 98%); }
+  @keyframes bob { 50% { transform: translateY(-8px); } }
+  h1 { font-size: clamp(44px, 9vw, 84px); line-height: 1; font-weight: 700; }
+  h1 span { color: var(--peanut); }
+  .tagline { margin: 18px auto 0; max-width: 620px; font-size: clamp(18px, 2.4vw, 21px); color: var(--muted); }
+  .soon {
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 28px; padding: 10px 18px;
+    border: 1px solid rgba(242, 140, 56, 0.4); border-radius: 999px;
+    background: rgba(242, 140, 56, 0.08);
+    font-weight: 700; font-size: 15px; color: var(--ink);
+  }
+  .soon i { width: 9px; height: 9px; border-radius: 50%; background: var(--ember); box-shadow: 0 0 0 0 rgba(242, 140, 56, 0.6); animation: ping 2s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 10px rgba(242, 140, 56, 0); } 100% { box-shadow: 0 0 0 0 rgba(242, 140, 56, 0); } }
+
+  /* Mock stream */
+  .stream {
+    position: relative; margin: 48px auto 0; max-width: 880px; aspect-ratio: 16 / 9;
+    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(10, 8, 6, 0) 40%, rgba(10, 8, 6, 0.7)),
+      radial-gradient(500px 260px at 70% 40%, rgba(90, 140, 160, 0.35), transparent 70%),
+      radial-gradient(400px 300px at 20% 70%, rgba(120, 80, 160, 0.3), transparent 70%),
+      linear-gradient(135deg, #1f2a33, #241a2e 60%, #17110d);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  }
+  .live { position: absolute; top: 16px; left: 16px; padding: 4px 10px; border-radius: 6px; background: #e0313b; font: 700 13px/1.4 "Nunito", sans-serif; letter-spacing: 0.06em; }
+  .overlay { position: absolute; left: 4%; right: 4%; bottom: 5%; display: flex; flex-direction: column; gap: 10px; max-width: 520px; text-align: left; }
+  .who { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%; flex: none;
+    display: grid; place-items: center;
+    background: var(--bg-2); border: 3px solid var(--accent, var(--peanut));
+    font: 700 24px/1 "Fredoka", sans-serif; color: var(--accent, var(--peanut));
+    transition: border-color 0.4s, color 0.4s, transform 0.1s;
+    background-size: cover; background-position: center;
+  }
+  .avatar.pic { color: transparent; background-color: #f6e9da; }
+  .who b { display: block; font: 600 20px/1.1 "Fredoka", sans-serif; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6); }
+  .who small { font-size: 13px; color: var(--muted); text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6); }
+  .bubble {
+    padding: 14px 18px; border-radius: 16px; min-height: 3.2em;
+    background: rgba(20, 14, 10, 0.82);
+    border: 2px solid color-mix(in srgb, var(--accent, var(--peanut)) 60%, transparent);
+    font-size: clamp(15px, 2.2vw, 19px); line-height: 1.4;
+    transition: border-color 0.4s;
+  }
+  .cursor { display: inline-block; width: 2px; height: 1em; margin-left: 2px; vertical-align: -0.12em; background: var(--accent, var(--peanut)); animation: blink 0.9s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Sections */
+  section { padding: 72px 0 0; }
+  h2 { font-size: clamp(28px, 4vw, 38px); font-weight: 600; text-align: center; }
+  .lead { text-align: center; color: var(--muted); max-width: 620px; margin: 10px auto 0; }
+
+  .gallery { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 32px; }
+  .card { padding: 20px 18px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  .card .dot { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 20px/1 "Fredoka", sans-serif; color: var(--bg); background: var(--c); }
+  .card .dot.pic { width: 56px; height: 56px; background: #f6e9da center / cover; border: 2px solid var(--c); }
+  .card h3 { margin-top: 14px; font-size: 21px; font-weight: 600; }
+  .card .kind { font-size: 13px; color: var(--c); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .card p { margin-top: 8px; font-size: 15px; color: var(--muted); }
+
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
+  .step { padding: 22px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  .step .n { font: 700 14px/1 "Fredoka", sans-serif; color: var(--ember); letter-spacing: 0.08em; }
+  .step h3 { margin-top: 10px; font-size: 21px; font-weight: 600; }
+  .step p { margin-top: 6px; font-size: 15px; color: var(--muted); }
+
+  footer { padding: 80px 0 40px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer strong { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .gallery .card:last-child { grid-column: span 2; }
+    .steps { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    header { padding-top: 48px; }
+    .gallery { grid-template-columns: 1fr; }
+    .gallery .card:last-child { grid-column: auto; }
+    .stream { aspect-ratio: 4 / 3; }
+    .avatar { width: 44px; height: 44px; font-size: 19px; }
+    .mascot { width: 180px; height: 180px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .soon i, .cursor, .mascot { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+  <header class="wrap">
+    <img class="mascot" src="/peanut.png" width="240" height="240" alt="Peanut, the fox">
+    <h1>Peanut <span>Gallery</span></h1>
+    <p class="tagline">Your AI cov-host. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay.</p>
+    <div class="soon"><i aria-hidden="true"></i> Coming soon from Kitsune Den</div>
+
+    <div class="stream" aria-label="Example: a co-host reacting on a stream overlay">
+      <div class="live">LIVE</div>
+      <div class="overlay">
+        <div class="who">
+          <div class="avatar pic" id="avatar" style="background-image:url(/peanut.png)">P</div>
+          <div><b id="name">Peanut</b><small id="kind">the fox in your peanut gallery</small></div>
+        </div>
+        <div class="bubble" aria-live="polite"><span id="line"></span><span class="cursor" aria-hidden="true"></span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="wrap" id="gallery">
+    <h2>Meet the gallery</h2>
+    <p class="lead">Pick the co-host that fits your stream, or bring your own. Each one has a voice, a look and opinions.</p>
+    <div class="gallery">
+      <div class="card" style="--c:#d99a55"><div class="dot pic" style="background-image:url(/peanut.png)" role="img" aria-label="Peanut"></div><h3>Peanut</h3><div class="kind">Fox · any game</div><p>Curious, upbeat, teases kindly and cheers every win.</p></div>
+      <div class="card" style="--c:#9cc39a"><div class="dot">M</div><h3>Mochi</h3><div class="kind">Tanuki · cozy games</div><p>Soft-spoken, notices the little things, celebrates tiny victories.</p></div>
+      <div class="card" style="--c:#a78bfa"><div class="dot">V</div><h3>Vex</h3><div class="kind">Crow · shooters</div><p>Chaotic backseat gamer. Roasts the plays, never the person.</p></div>
+      <div class="card" style="--c:#5fb3b3"><div class="dot">Q</div><h3>Quill</h3><div class="kind">Owl · strategy &amp; RPGs</div><p>Lore nerd and strategist. Remembers the plot so you don't have to.</p></div>
+      <div class="card" style="--c:#7cc8ff"><div class="dot">W</div><h3>Wisp</h3><div class="kind">Ghost · horror</div><p>A ghost who's scared of everything. Panics so you don't have to.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="how">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step"><div class="n">01 · WATCHES</div><h3>Sees your stream</h3><p>Reads what's on screen from OBS, so it reacts to the game you're actually playing.</p></div>
+      <div class="step"><div class="n">02 · LISTENS</div><h3>Hears you and chat</h3><p>Hold a hotkey and talk to it, or let chat, raids and redeems set it off.</p></div>
+      <div class="step"><div class="n">03 · TALKS BACK</div><h3>Answers out loud</h3><p>A real voice and an animated overlay, with a panic mute one key away.</p></div>
+    </div>
+  </section>
+
+  <footer class="wrap">
+    <p><strong>Peanut Gallery</strong> · your AI cov-host, by Kitsune Den</p>
+    <p>© 2026 Kitsune Den</p>
+  </footer>
+
+<script>
+  // Cycle the mock overlay through lines from the gallery.
+  const lines = [
+    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.png", text: "Wait, what's that shiny thing? Go back!" },
+    { name: "Vex", kind: "backseat crow", c: "#a78bfa", text: "Bold of you to reload in the open." },
+    { name: "Wisp", kind: "scared of everything", c: "#7cc8ff", text: "Don't go down there. I'm a ghost and I wouldn't go down there." },
+    { name: "Mochi", kind: "cozy tanuki", c: "#9cc39a", text: "Look at your little garden. It's thriving." },
+    { name: "Quill", kind: "lore owl", c: "#5fb3b3", text: "Fun fact: that boss is weak to fire. You have fire." },
+    { name: "Peanut", kind: "the fox in your peanut gallery", c: "#d99a55", img: "/peanut.png", text: "You did it! I knew you would. Mostly." },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const stream = document.querySelector(".stream");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let i = 0;
+
+  function show(l) {
+    stream.style.setProperty("--accent", l.c);
+    const a = $("avatar");
+    a.textContent = l.name[0];
+    a.classList.toggle("pic", Boolean(l.img));
+    a.style.backgroundImage = l.img ? `url(${l.img})` : "";
+    $("name").textContent = l.name;
+    $("kind").textContent = l.kind;
+  }
+
+  function type(text, done) {
+    const out = $("line");
+    if (still) { out.textContent = text; setTimeout(done, 4000); return; }
+    out.textContent = "";
+    let n = 0;
+    (function step() {
+      if (n < text.length) {
+        out.textContent += text[n];
+        const ch = text[n++];
+        $("avatar").style.transform = `translateY(${n % 2 ? -2 : 0}px)`;
+        setTimeout(step, ".!?".includes(ch) ? 260 : ch === "," ? 120 : 38);
+      } else {
+        $("avatar").style.transform = "";
+        setTimeout(done, 2600);
+      }
+    })();
+  }
+
+  (function next() {
+    const l = lines[i++ % lines.length];
+    show(l);
+    type(l.text, next);
+  })();
+</script>
+</body>
+</html>
