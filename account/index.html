@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your account · Peanut Gallery</title>
+<meta name="description" content="Your Peanut Gallery co-host time and plan.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17110d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #17110d;
+    --bg-2: #211913;
+    --bg-3: #2d231b;
+    --ink: #fff4e6;
+    --muted: #c4b3a1;
+    --peanut: #d99a55;
+    --ember: #f28c38;
+    --amber: #f5b14c;
+    --red: #ef6b5b;
+    --twitch: #9146ff;
+    --line: rgba(255, 244, 230, 0.1);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(242, 140, 56, 0.16), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font: 17px/1.6 "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, h3, .brand { font-family: "Fredoka", "Nunito", system-ui, sans-serif; letter-spacing: -0.01em; }
+  a { color: var(--peanut); }
+
+  .top { display: flex; align-items: center; gap: 12px; padding: 28px 0 8px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 20px; }
+  .brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--bg-3); }
+  .top .who { margin-left: auto; color: var(--muted); font-size: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+
+  h1 { font-size: clamp(32px, 6vw, 44px); line-height: 1.1; margin: 28px 0 6px; }
+  .lede { color: var(--muted); }
+
+  .card { margin-top: 22px; padding: 22px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  .card h2 { font-size: 20px; margin-bottom: 8px; }
+  .muted { color: var(--muted); font-size: 15px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 20px; border-radius: 999px; border: 0; cursor: pointer;
+    background: var(--peanut); color: #1b130d; font: 800 15px "Nunito", system-ui, sans-serif; text-decoration: none;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--ember); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .btn.twitch { background: var(--twitch); color: #fff; }
+  .btn.twitch:hover, .btn.twitch:focus-visible { background: #772ce8; }
+  .btn.quiet { background: var(--bg-3); color: var(--ink); font-weight: 700; }
+  .btn.quiet:hover, .btn.quiet:focus-visible { background: #3a2e24; }
+  .link { background: none; border: 0; color: var(--muted); font: inherit; text-decoration: underline; cursor: pointer; }
+
+  .bar { height: 12px; margin: 14px 0 8px; border-radius: 999px; background: var(--bg-3); overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 999px; background: var(--ember); transition: width 0.4s; }
+  .bar.low span { background: var(--amber); }
+  .bar.critical span { background: var(--red); }
+  .left { font-weight: 700; }
+  .left.low { color: var(--amber); }
+  .left.critical, .left.out { color: var(--red); }
+
+  .plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 14px; }
+  .plan { padding: 16px; border-radius: 14px; background: var(--bg-3); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+  .plan.current { border-color: rgba(242, 140, 56, 0.6); }
+  .plan h3 { font-size: 17px; }
+  .plan .price { font-family: "Fredoka", system-ui, sans-serif; font-size: 26px; font-weight: 600; }
+  .plan .price small { font-size: 14px; color: var(--muted); font-weight: 500; }
+  .plan .btn { margin-top: auto; }
+
+  .note { margin-top: 18px; padding: 12px 16px; border-radius: 12px; font-size: 15px; }
+  .note.good { background: rgba(156, 195, 154, 0.14); border: 1px solid rgba(156, 195, 154, 0.4); }
+  .note.warn { background: rgba(245, 177, 76, 0.12); border: 1px solid rgba(245, 177, 76, 0.4); }
+  .note.bad { background: rgba(239, 107, 91, 0.12); border: 1px solid rgba(239, 107, 91, 0.4); }
+
+  [hidden] { display: none !important; }
+  footer { padding: 60px 0 36px; text-align: center; color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><img src="/peanut.webp" alt="">Peanut Gallery</a>
+    <div class="who" id="who" hidden>
+      <span>Signed in as <b id="login"></b></span>
+      <button class="link" id="signout" type="button">Sign out</button>
+    </div>
+  </div>
+
+  <h1>Your account</h1>
+  <p class="lede">Your co-host time and your plan. The app shows the same bar.</p>
+
+  <div class="note" id="notice" hidden></div>
+
+  <section class="card" id="signin" hidden>
+    <h2>Sign in with Twitch</h2>
+    <p class="muted">Your Peanut Gallery account is your Twitch channel. We only ask Twitch who you are; nothing is posted or changed.</p>
+    <p style="margin-top: 16px"><button class="btn twitch" id="twitch" type="button">Sign in with Twitch</button></p>
+  </section>
+
+  <p class="muted" id="loading" style="margin-top: 22px">Loading…</p>
+
+  <section class="card" id="time" hidden>
+    <h2>Co-host time</h2>
+    <div class="bar" id="bar"><span id="fill"></span></div>
+    <p><span class="left" id="left"></span> <span class="muted" id="resets"></span></p>
+    <p class="muted" style="margin-top: 8px">Time counts while the AI co-host is live on your stream. Reactions mode is always free.</p>
+  </section>
+
+  <section class="card" id="plan" hidden>
+    <h2>Your plan: <span id="tier"></span></h2>
+    <p class="muted" id="plan-line"></p>
+    <div class="note warn" id="past-due" hidden>Your last payment didn't go through. Stripe will try again; update your card in Manage billing.</div>
+    <div class="plans" id="plans"></div>
+    <p style="margin-top: 16px" id="manage-row" hidden><button class="btn quiet" id="manage" type="button">Manage billing</button></p>
+    <p class="muted" id="manage-note" style="margin-top: 8px" hidden>Change plan, update your card or cancel, on Stripe. Cancelling keeps your plan until the end of the month you've paid for.</p>
+  </section>
+
+  <footer>
+    <p><a href="/">peanutgallery.gg</a> · your AI cov-host, by Kitsune Den</p>
+  </footer>
+</div>
+
+<script>
+(() => {
+  // A local preview (python -m http.server, see the README) talks to a local cloud.
+  const API = location.hostname === "127.0.0.1" ? "http://127.0.0.1:8090" : "https://api.peanutgallery.gg";
+  const TWITCH_CLIENT_ID = "73bbq90a0nur9t2lfmvye7rxgoofhw";
+  const HERE = location.origin + "/account/";
+  const TIERS = { free: "Free", byo: "Bring your own AI", hobby: "Hobby", pro: "Professional", founding: "Founding streamer" };
+  const ABOUT = {
+    byo: "Your own AI, with our gallery voices and screen reading.",
+    hobby: "Our AI and the five gallery voices.",
+    pro: "Our AI and voices, with the most hours.",
+  };
+  const $ = (id) => document.getElementById(id);
+
+  // The cloud session lives in this tab only, and is gone when it closes.
+  const store = {
+    get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } },
+    set: (k, v) => { try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} },
+  };
+
+  function hm(minutes) {
+    const h = Math.floor(minutes / 60), m = minutes % 60;
+    return h ? (m ? `${h}h ${m}m` : `${h}h`) : `${m}m`;
+  }
+  function day(iso) {
+    return new Date(iso).toLocaleDateString(undefined, { month: "long", day: "numeric" });
+  }
+  function notice(kind, text) {
+    const n = $("notice");
+    n.className = "note " + kind;
+    n.textContent = text;
+    n.hidden = !text;
+  }
+
+  async function api(path, { method = "GET", body, token = store.get("pg") } = {}) {
+    const r = await fetch(API + path, {
+      method,
+      headers: {
+        ...(token ? { Authorization: "Bearer " + token } : {}),
+        ...(body ? { "Content-Type": "application/json" } : {}),
+      },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    const data = r.status === 204 ? null : await r.json().catch(() => null);
+    if (!r.ok) {
+      const e = new Error((data && data.message) || `Something went wrong (${r.status}).`);
+      e.status = r.status;
+      e.code = data && data.error;
+      throw e;
+    }
+    return data;
+  }
+
+  function signIn() {
+    const state = crypto.getRandomValues(new Uint32Array(4)).join("-");
+    store.set("twitch_state", state);
+    const q = new URLSearchParams({
+      client_id: TWITCH_CLIENT_ID,
+      redirect_uri: HERE,
+      response_type: "token",
+      scope: "",
+      state,
+    });
+    location.href = "https://id.twitch.tv/oauth2/authorize?" + q;
+  }
+
+  // Back from Twitch: trade its token for a cloud session, then let it go.
+  async function finishTwitch() {
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (!h.has("access_token") && !h.has("error")) return;
+    history.replaceState(null, "", location.pathname + location.search);
+    if (h.has("error")) {
+      notice("bad", "Twitch sign-in was cancelled.");
+      return;
+    }
+    if (!h.get("state") || h.get("state") !== store.get("twitch_state")) {
+      notice("bad", "That sign-in didn't start here. Try again.");
+      return;
+    }
+    store.set("twitch_state", null);
+    const twitch = h.get("access_token");
+    try {
+      const s = await api("/v1/session", { method: "POST", body: { twitch_token: twitch }, token: null });
+      store.set("pg", s.token);
+    } catch (e) {
+      notice("bad", e.message);
+    } finally {
+      fetch("https://id.twitch.tv/oauth2/revoke", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ client_id: TWITCH_CLIENT_ID, token: twitch }),
+      }).catch(() => {});
+    }
+  }
+
+  function showSignedOut() {
+    $("loading").hidden = true;
+    $("who").hidden = $("time").hidden = $("plan").hidden = true;
+    $("signin").hidden = false;
+  }
+
+  function showTime(u) {
+    const cap = u.allowance_minutes;
+    const left = cap == null ? null : Math.max(cap - u.used_minutes, 0);
+    const pct = cap ? Math.min(100, (left / cap) * 100) : 100;
+    $("fill").style.width = (u.state === "out" ? 0 : pct) + "%";
+    $("bar").className = "bar " + u.state;
+    const text = $("left");
+    text.className = "left " + u.state;
+    if (u.kind === "unlimited") text.textContent = "Unlimited co-host time";
+    else if (u.kind === "trial")
+      text.textContent = u.state === "out"
+        ? "Free trial used. Reactions mode: unlimited."
+        : `Free trial: ${hm(u.used_minutes)} of ${hm(cap)} used`;
+    else if (u.state === "out") text.textContent = "Out of co-host time. Reactions mode stays on.";
+    else text.textContent = `${hm(left)} left this month`;
+    $("resets").textContent = u.resets_at ? `Refills ${day(u.resets_at)}.` : "";
+  }
+
+  function showPlan(b) {
+    $("tier").textContent = TIERS[b.tier] || b.tier;
+    const status = b.subscription && b.subscription.status;
+    const paying = ["active", "trialing", "past_due"].includes(status);
+    $("past-due").hidden = status !== "past_due";
+    $("manage-row").hidden = $("manage-note").hidden = !b.can_manage;
+
+    const open = b.plans.some((p) => p.available);
+    let line = "";
+    if (b.tier === "founding") line = "Free during the beta, with Professional's hours. Thank you for helping us build it.";
+    else if (paying) line = "Billed monthly through Stripe.";
+    else if (!open) line = "Subscriptions open soon.";
+    else if (b.tier === "free") line = "Pick a plan for more co-host time each month.";
+    $("plan-line").textContent = line;
+
+    const grid = $("plans");
+    grid.replaceChildren();
+    if (b.tier === "founding" || paying || !open) return;
+    for (const p of b.plans) {
+      const card = document.createElement("div");
+      card.className = "plan";
+      const h = document.createElement("h3");
+      h.textContent = TIERS[p.tier] || p.tier;
+      const price = document.createElement("div");
+      price.className = "price";
+      price.append(`$${p.price_usd.toFixed(2)} `);
+      const per = document.createElement("small");
+      per.textContent = "/ month";
+      price.append(per);
+      const about = document.createElement("p");
+      about.className = "muted";
+      about.textContent = `${p.hours} hours a month. ${ABOUT[p.tier] || ""}`;
+      const go = document.createElement("button");
+      go.className = "btn";
+      go.type = "button";
+      go.textContent = "Subscribe";
+      go.disabled = !p.available;
+      go.addEventListener("click", () => toStripe("/v1/billing/checkout", { tier: p.tier }, go));
+      card.append(h, price, about, go);
+      grid.append(card);
+    }
+  }
+
+  async function toStripe(path, body, button) {
+    button.disabled = true;
+    const label = button.textContent;
+    button.textContent = "Opening Stripe…";
+    try {
+      const { url } = await api(path, { method: "POST", body });
+      location.href = url;
+    } catch (e) {
+      notice("bad", e.message);
+      button.disabled = false;
+      button.textContent = label;
+    }
+  }
+
+  async function load() {
+    if (!store.get("pg")) return showSignedOut();
+    try {
+      const [u, b] = await Promise.all([api("/v1/me"), api("/v1/billing")]);
+      $("login").textContent = u.login;
+      showTime(u);
+      showPlan(b);
+      $("loading").hidden = $("signin").hidden = true;
+      $("who").hidden = $("time").hidden = $("plan").hidden = false;
+      return b;
+    } catch (e) {
+      if (e.status === 401) {
+        store.set("pg", null);
+        return showSignedOut();
+      }
+      $("loading").hidden = true;
+      notice("bad", e.message);
+    }
+  }
+
+  // Back from Checkout: the webhook usually lands within seconds, so look a
+  // few more times until the plan shows.
+  async function afterCheckout(first) {
+    const q = new URLSearchParams(location.search);
+    const result = q.get("checkout");
+    if (!result) return;
+    history.replaceState(null, "", location.pathname);
+    if (result === "cancelled") return notice("warn", "Checkout was cancelled. Nothing was charged.");
+    notice("good", "Thank you! Your plan is being switched on.");
+    let b = first;
+    for (let i = 0; i < 10 && b && !b.subscription; i++) {
+      await new Promise((r) => setTimeout(r, 2000));
+      b = await load();
+    }
+    notice("good", b && b.subscription ? "Thank you! Your plan is on. The app picks it up within a minute." : "Thank you! Your plan should show here in a minute; refresh to check.");
+  }
+
+  $("twitch").addEventListener("click", signIn);
+  $("manage").addEventListener("click", (e) => toStripe("/v1/billing/portal", undefined, e.currentTarget));
+  $("signout").addEventListener("click", async () => {
+    const token = store.get("pg");
+    store.set("pg", null);
+    if (token) await api("/v1/session", { method: "DELETE", token }).catch(() => {});
+    notice("", "");
+    showSignedOut();
+  });
+
+  (async () => {
+    await finishTwitch();
+    const b = await load();
+    await afterCheckout(b);
+  })();
+})();
+</script>
+</body>
+</html>
