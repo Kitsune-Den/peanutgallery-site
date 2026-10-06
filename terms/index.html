@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Service · Peanut Gallery</title>
+<meta name="description" content="The terms for using Peanut Gallery, the AI co-host by Kitsune Den.">
+<meta name="theme-color" content="#17110d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #17110d;
+    --bg-2: #211913;
+    --bg-3: #2d231b;
+    --ink: #fff4e6;
+    --muted: #c4b3a1;
+    --peanut: #d99a55;
+    --line: rgba(255, 244, 230, 0.1);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(242, 140, 56, 0.16), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font: 17px/1.65 "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, .brand { font-family: "Fredoka", "Nunito", system-ui, sans-serif; letter-spacing: -0.01em; }
+  a { color: var(--peanut); }
+  .top { display: flex; align-items: center; gap: 16px; padding: 28px 0 8px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 20px; }
+  .brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--bg-3); }
+  .top nav { margin-left: auto; display: flex; gap: 16px; font-size: 15px; }
+  .top nav a { color: var(--muted); }
+  h1 { font-size: clamp(32px, 6vw, 44px); line-height: 1.1; margin: 28px 0 6px; }
+  .meta { color: var(--muted); font-size: 15px; }
+  h2 { font-size: 22px; margin: 34px 0 8px; }
+  p, ul { margin-top: 10px; }
+  ul { padding-left: 22px; }
+  li { margin-top: 6px; }
+  .lede { margin-top: 18px; padding: 18px 20px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  footer { padding: 60px 0 36px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer p { margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><img src="/peanut.webp" alt="">Peanut Gallery</a>
+    <nav><a href="/privacy/">Privacy</a><a href="/account/">Your account</a></nav>
+  </div>
+
+  <h1>Terms of Service</h1>
+  <p class="meta">Peanut Gallery, by Kitsune Den, operated by Whisker Wood Meadows LLC. Last updated 6 October 2026.</p>
+
+  <div class="lede">
+    <p style="margin-top: 0">Peanut Gallery is an AI co-host for streamers. A desktop app sits next to OBS, watches your
+    stream, hears what you say when you push to talk, and reacts out loud through a voice and an animated overlay. Kitsune
+    Den cloud (api.peanutgallery.gg) runs the AI and the voices for it. Installing the app, signing in, or subscribing
+    means you accept these terms. If you don't, please don't use it.</p>
+  </div>
+
+  <h2>Who can use it</h2>
+  <p>You need a Twitch account, and you must meet Twitch's minimum age, which is 13 or higher depending on where you
+  live. You must follow Twitch's <a href="https://www.twitch.tv/p/legal/terms-of-service/">Terms of Service</a> and
+  <a href="https://safety.twitch.tv/s/article/Community-Guidelines">Community Guidelines</a>. These terms sit on top of
+  Twitch's, not instead of them. To buy a plan you must be old enough to make the purchase where you live, or have a
+  parent or guardian's permission.</p>
+
+  <h2>Your stream, your call</h2>
+  <p>The co-host speaks on your stream, so what it says goes out under your name. You're responsible for using it in a
+  way that keeps your stream within Twitch's rules.</p>
+  <ul>
+    <li><b>It's an AI.</b> It can be wrong, odd, or badly timed. Every line we voice passes a safety filter and a
+    moderation check first, but no filter catches everything. Keep the panic mute (F10) handy.</li>
+    <li><b>Reading chat aloud is up to you.</b> If you turn it on, viewers' messages are spoken on your stream. You
+    choose who can use it, and the same rules apply as for anything else on your channel.</li>
+    <li><b>Your own personas and your own AI.</b> If you write a persona or connect your own AI endpoint, you're
+    responsible for what it's told to do and what it says. Don't use a persona to impersonate a real person.</li>
+    <li><b>Your own keys.</b> If you add your own Anthropic or ElevenLabs key, your use of those services is between you
+    and them, under their terms and on your bill.</li>
+  </ul>
+
+  <h2>Plans and co-host time</h2>
+  <p>Co-host time is the time the AI co-host is live on your stream. It counts by the minute while the app is live in
+  full mode and your Twitch channel is live, plus any minute in which the cloud does paid work for you (an AI reply, a
+  voiced line, a screen read, or chat read aloud in a gallery voice). Reactions mode, which plays the persona's
+  pre-made clips, is free and unlimited.</p>
+  <ul>
+    <li><b>Free:</b> a one-time 3-hour trial of co-host time per Twitch channel, and reaction clips without limit. Chat
+    read aloud in the standard voice is free up to 50,000 characters a month.</li>
+    <li><b>Bring your own AI:</b> US$2.99 a month, 160 hours of co-host time, for your own AI with our voices and
+    screen reading.</li>
+    <li><b>Hobby:</b> US$9.99 a month, 60 hours of co-host time, with our AI and voices.</li>
+    <li><b>Professional:</b> US$19.99 a month, 160 hours of co-host time, with our AI and voices.</li>
+  </ul>
+  <p>Hours refill each month on the date you subscribed. Unused hours don't carry over. When you run out, the AI pauses
+  and the app stays in reactions mode until your hours refill. Nothing is ever charged for going over: there are no
+  overage fees.</p>
+  <p>To keep the service fair and its costs predictable, each account also has limits per minute (on AI replies,
+  screen reads and voiced characters), can be live on one computer at a time, and shares daily budgets with everyone.
+  If those budgets run out, the AI and voices pause for everyone until they reset; reactions mode keeps working.</p>
+
+  <h2>Paying</h2>
+  <p>Prices are in US dollars. Any sales tax or VAT is added at checkout.</p>
+  <ul>
+    <li><b>Stripe sells plans for us.</b> You pay on Stripe's checkout page. Stripe acts as the seller of record and
+    handles the payment, receipts and any sales tax or VAT, and Stripe's terms apply to the purchase as well as these.
+    We never see your card details.</li>
+    <li><b>Renewal.</b> A plan renews every month from the day you subscribe until you cancel.</li>
+    <li><b>Changing plan</b> takes effect straight away, from Manage billing on your account page or in the app. Stripe
+    charges or credits the difference for the rest of the month.</li>
+    <li><b>Cancelling.</b> Cancel any time from Manage billing. Your plan stays on until the end of the month you've
+    paid for, then your account goes back to Free. We don't refund part-months, except where the law requires it.</li>
+    <li><b>Failed payments.</b> Stripe tries again for a while and your plan stays on meanwhile. If the payment can't be
+    collected, your account goes back to Free.</li>
+    <li><b>Price changes</b> to an existing plan are announced before they apply, and take effect from your next month
+    after the notice. You can cancel before then.</li>
+  </ul>
+
+  <h2>Founding streamers</h2>
+  <p>During the beta we invite a small number of founding streamers. Founding streamers get Professional's hours free
+  for the length of the beta. We'll tell founding streamers what happens to their plan before the beta ends. A founding place is personal: the download link in your welcome email is for you alone, so please
+  don't share it. We may end a founding place for a breach of these terms.</p>
+
+  <h2>The app and updates</h2>
+  <p>The app is in beta. During the beta the Windows installer isn't code-signed, so Windows may warn you the first time
+  you run it. The app checks Kitsune Den cloud for updates while you're signed in and offers to install them; it only
+  installs an update signed with our key. Updates restart the app, so they wait until you stop the co-host.</p>
+
+  <h2>Acceptable use</h2>
+  <p>You may not use Peanut Gallery to:</p>
+  <ul>
+    <li>Break Twitch's Terms of Service or Community Guidelines.</li>
+    <li>Harass, threaten or impersonate anyone, including by making a voice or persona say something as if it were a
+    real person.</li>
+    <li>Use the voices or the AI for anything other than your stream with the app: for example, reselling them, using
+    the cloud as a general-purpose text-to-speech or AI service, or getting round its limits.</li>
+    <li>Share an account, or run one account on several channels.</li>
+    <li>Attack, overload, reverse engineer or try to gain unauthorised access to the app, the cloud or the site.</li>
+  </ul>
+  <p>We may pause the AI for an account, suspend it, or close it for a breach of these terms, without notice where the
+  breach is serious.</p>
+
+  <h2>Availability</h2>
+  <p>Peanut Gallery is provided as is. We don't promise it will be available, uninterrupted, or free of bugs, and we may
+  change how features work, add or remove them, or end the service.</p>
+  <p>To the fullest extent the law allows, Whisker Wood Meadows LLC is not liable for any indirect or consequential loss
+  arising from your use of Peanut Gallery, and our total liability is limited to what you paid us in the twelve months
+  before the claim.</p>
+
+  <h2>Your data</h2>
+  <p>Covered in the <a href="/privacy/">Privacy Policy</a>. In short: screenshots, what you say and your chat pass
+  through to make the co-host's lines and are not stored; we keep your Twitch account ID, how much co-host time you've
+  used, and your plan.</p>
+
+  <h2>Ending your use</h2>
+  <p>You can stop using Peanut Gallery at any time: cancel your plan, uninstall the app, and email us if you'd like your
+  account deleted. We may suspend or end access for anyone breaking these terms or Twitch's.</p>
+
+  <h2>Changes</h2>
+  <p>We may update these terms. If we make a material change, the date at the top will change and we'll announce it on
+  peanutgallery.gg before it takes effect. Continuing to use Peanut Gallery after that means you accept the new terms.</p>
+
+  <h2>Contact</h2>
+  <p>Whisker Wood Meadows LLC, United States.<br><a href="mailto:info@peanutgallery.gg">info@peanutgallery.gg</a></p>
+
+  <footer>
+    <p><a href="/">peanutgallery.gg</a> · your AI cov-host, by Kitsune Den</p>
+    <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
+  </footer>
+</div>
+</body>
+</html>
