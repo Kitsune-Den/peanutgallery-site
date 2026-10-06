@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy · Peanut Gallery</title>
+<meta name="description" content="What Peanut Gallery, the AI co-host by Kitsune Den, handles and keeps.">
+<meta name="theme-color" content="#17110d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #17110d;
+    --bg-2: #211913;
+    --bg-3: #2d231b;
+    --ink: #fff4e6;
+    --muted: #c4b3a1;
+    --peanut: #d99a55;
+    --line: rgba(255, 244, 230, 0.1);
+    --radius: 18px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, rgba(242, 140, 56, 0.16), transparent 70%),
+      var(--bg);
+    color: var(--ink);
+    font: 17px/1.65 "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, .brand { font-family: "Fredoka", "Nunito", system-ui, sans-serif; letter-spacing: -0.01em; }
+  a { color: var(--peanut); }
+  .top { display: flex; align-items: center; gap: 16px; padding: 28px 0 8px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: 20px; }
+  .brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--bg-3); }
+  .top nav { margin-left: auto; display: flex; gap: 16px; font-size: 15px; }
+  .top nav a { color: var(--muted); }
+  h1 { font-size: clamp(32px, 6vw, 44px); line-height: 1.1; margin: 28px 0 6px; }
+  .meta { color: var(--muted); font-size: 15px; }
+  h2 { font-size: 22px; margin: 34px 0 8px; }
+  p, ul { margin-top: 10px; }
+  ul { padding-left: 22px; }
+  li { margin-top: 6px; }
+  .lede { margin-top: 18px; padding: 18px 20px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid var(--line); }
+  .table { margin-top: 14px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 200px 1fr; border-top: 1px solid var(--line); }
+  .row:first-child { border-top: 0; }
+  .row > div { padding: 12px 14px; font-size: 16px; }
+  .row > div:first-child { background: var(--bg-2); font-weight: 700; }
+  .row.head > div { background: var(--bg-3); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr; }
+    .row.head { display: none; }
+  }
+  footer { padding: 60px 0 36px; text-align: center; color: var(--muted); font-size: 14px; }
+  footer p { margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/"><img src="/peanut.webp" alt="">Peanut Gallery</a>
+    <nav><a href="/terms/">Terms</a><a href="/account/">Your account</a></nav>
+  </div>
+
+  <h1>Privacy Policy</h1>
+  <p class="meta">Peanut Gallery, by Kitsune Den, operated by Whisker Wood Meadows LLC. Last updated 6 October 2026.</p>
+
+  <div class="lede">
+    <p style="margin-top: 0">Peanut Gallery is an AI co-host for streamers. To react to your stream it has to see your
+    screen, hear you when you push to talk, and follow your chat. Those pass through to write and voice the co-host's
+    lines, and are not kept. What we do keep is small: who you are on Twitch, how much co-host time you've used, and your
+    plan. This page says exactly what, and for how long.</p>
+  </div>
+
+  <h2>What each part handles</h2>
+  <div class="table">
+    <div class="row head"><div>Part</div><div>What is handled, and what happens to it</div></div>
+    <div class="row"><div>Signing in, in the app</div><div>"Connect Twitch" asks Twitch for read-only access to your channel's followers, subscriptions, bits, channel points and chat, so the co-host can react to them. The Twitch sign-in stays on your PC, in Windows Credential Manager. The app shows it to Kitsune Den cloud once, to prove who you are; we keep your Twitch user ID and login, never the Twitch sign-in itself. The cloud gives the app its own session, which is kept on your PC and on our side only as a one-way hash, and expires 90 days after it was last used. Disconnecting Twitch signs the app out of the cloud.</div></div>
+    <div class="row"><div>Signing in, on the website</div><div>The account page asks Twitch only who you are, with no access to your channel. It trades that for a session and immediately asks Twitch to cancel what it was given. The session lives in that browser tab's storage and is gone when you close the tab; Sign out ends it on our side too. No cookies.</div></div>
+    <div class="row"><div>The AI (Kitsune Den brain)</div><div>Each time the co-host thinks, the app sends the cloud the latest screenshot of your stream, the recent conversation (what you said by push to talk, and the co-host's own lines), and what prompted it: for example a viewer's chat message to the co-host, or a follow, sub, cheer or raid with the viewer's name. The cloud passes them to Anthropic's Claude to write a reply, checks the reply, and sends it back. None of it is stored. We keep only counts: how many replies, and how much text went in and out.</div></div>
+    <div class="row"><div>Your own AI or your own keys</div><div>If you use your own Anthropic key or your own AI endpoint, the app sends the same things from your PC straight to that service, not through us. If you turn on "Describe the screen for my AI", screenshots go to the cloud, which asks Anthropic's Claude for a short description of what's on screen. The screenshot isn't stored; we keep a count of reads.</div></div>
+    <div class="row"><div>Voices</div><div>Each line the co-host speaks goes to the cloud, which runs it through a safety filter and a moderation check (Anthropic's Claude sees the text), then has ElevenLabs voice it in the gallery persona's voice. The audio comes back to your overlay. Neither the text nor the audio is stored; we count characters voiced.</div></div>
+    <div class="row"><div>Reading chat aloud</div><div>Off unless you turn it on. When a viewer's message qualifies under your rules (a channel-points reward or a command), its text goes to the cloud and is voiced in the free standard voice, which runs on our own server, or in a gallery voice through ElevenLabs on paid plans. The message isn't stored; we count characters per month for the free allowance.</div></div>
+    <div class="row"><div>Push to talk</div><div>The app records your microphone only while you hold the key (F9). For now this uses your own ElevenLabs key: the recording goes from your PC to ElevenLabs to turn it into text, and isn't sent to us.</div></div>
+    <div class="row"><div>Co-host time</div><div>One record for each minute the AI co-host is live or the cloud works for you, with the counts above, linked to your account. They make the usage bar, enforce the limits, and tell us what the service costs to run. Kept while your account exists. While you're live we also keep which computer is live (a random ID the app makes), so one account can't be live on two at once.</div></div>
+    <div class="row"><div>On your PC</div><div>Your settings, personas, API keys (in Windows Credential Manager) and the app's random ID stay on your computer. Screenshots from OBS are held in memory, never saved to disk.</div></div>
+    <div class="row"><div>Plans and payment</div><div>You pay on Stripe's checkout page, so your card details never reach us. We keep your Stripe customer ID, your subscription's ID, plan and status. Stripe receives our internal ID for your account and whatever you enter at checkout. Billing records are kept as long as payment and tax rules require.</div></div>
+    <div class="row"><div>Founding streamers</div><div>If you're invited, we keep your email address, when you were approved and emailed, a one-way hash of your personal download link, and how many times it was used. The welcome email is sent through Resend.</div></div>
+    <div class="row"><div>Waitlist and applications</div><div>The forms on peanutgallery.gg keep what you enter: your email address and Twitch channel, and for founding applications your platform, schedule, content and why you'd like to join. We use them only to contact you about Peanut Gallery, and delete them if you ask. Your IP address is used to stop form spam, held in memory for an hour, and not stored.</div></div>
+    <div class="row"><div>Updates</div><div>The app asks the cloud, with its session, whether there's a newer version than the one it has.</div></div>
+  </div>
+
+  <h2>What we keep</h2>
+  <ul>
+    <li>A database with what the table says is kept: your Twitch user ID and login, sessions (as hashes), co-host time
+    and its counts, your plan and Stripe IDs, and for founding streamers their invitation. It's backed up nightly, to
+    our own server.</li>
+    <li>Server logs: errors, and plan changes with the Twitch login they apply to. They are not archived, and are
+    cleared each time the service is updated.</li>
+    <li>No cookies. These pages and the account page have no analytics or advertising.</li>
+  </ul>
+  <p>That is the whole list. There is no store of screenshots, recordings, transcripts, chat or voiced lines.</p>
+
+  <h2>Who can see it</h2>
+  <p>You see your own usage and plan in the app and on your account page. Our own staff can see the database and logs,
+  and use them only to run the service, handle payments and look into problems.</p>
+
+  <h2>Third parties</h2>
+  <div class="table">
+    <div class="row head"><div>Service</div><div>What reaches it</div></div>
+    <div class="row"><div>Twitch</div><div>Signing in, and the app's read-only view of your channel's events and chat, happen with Twitch directly. Twitch's own privacy policy covers your account there.</div></div>
+    <div class="row"><div>Anthropic</div><div>Screenshots, the recent conversation and the prompting event when the Kitsune Den brain thinks; screenshots for screen descriptions; and the text of each line for the moderation check. Anthropic's commercial terms for its API don't let it train its models on what we send.</div></div>
+    <div class="row"><div>ElevenLabs</div><div>The text of lines spoken in a gallery voice, including chat read in one. With your own key, also your push-to-talk recordings and anything else your key is used for, under your own account.</div></div>
+    <div class="row"><div>Stripe</div><div>Sells the plans for us as the seller of record, and sees what you enter at checkout and in the billing portal. We send it our internal ID for your account. Stripe's privacy policy covers what you give it.</div></div>
+    <div class="row"><div>Resend</div><div>Founding streamers' email addresses and welcome emails.</div></div>
+    <div class="row"><div>Cloudflare</div><div>peanutgallery.gg and api.peanutgallery.gg are reached through Cloudflare, which sees your IP address and the requests as they pass through, and forwards email sent to peanutgallery.gg addresses.</div></div>
+    <div class="row"><div>Google Fonts</div><div>These pages load their fonts from Google, which sees your IP address when you view them.</div></div>
+  </div>
+
+  <h2>What we never do</h2>
+  <ul>
+    <li>We don't record your stream, your voice or your chat.</li>
+    <li>We don't sell your data, or share it with advertisers.</li>
+    <li>We don't use anything Peanut Gallery handles to train machine learning models.</li>
+  </ul>
+
+  <h2>Your choices</h2>
+  <ul>
+    <li>Reactions mode uses none of the AI or voice services: the clips play from your PC.</li>
+    <li>Reading chat aloud is off until you turn it on, and you decide who can use it.</li>
+    <li>Disconnect Twitch in the app, or sign out on the account page, at any time.</li>
+    <li>Want your account and its records deleted, or a copy of them, or have a question? Email us below. Billing
+    records are kept as long as payment and tax rules require, even after an account is deleted.</li>
+  </ul>
+
+  <h2>Viewers</h2>
+  <p>If you watch a stream that uses Peanut Gallery, your chat messages and your name in follows, subs, cheers and
+  raids may be passed to the AI so the co-host can react, and a message you send through the streamer's read-aloud
+  reward or command may be spoken on stream. None of it is stored by us. The streamer decides how their co-host and
+  read-aloud are set up.</p>
+
+  <h2>Children</h2>
+  <p>Peanut Gallery follows Twitch's minimum age, which is 13 or higher depending on where you live. We don't knowingly
+  collect anything from anyone younger.</p>
+
+  <h2>Changes</h2>
+  <p>If this policy changes, the date at the top will change, and material changes will be announced on
+  peanutgallery.gg before they take effect.</p>
+
+  <h2>Contact</h2>
+  <p>Whisker Wood Meadows LLC, United States.<br><a href="mailto:info@peanutgallery.gg">info@peanutgallery.gg</a></p>
+
+  <footer>
+    <p><a href="/">peanutgallery.gg</a> · your AI cov-host, by Kitsune Den</p>
+    <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
+  </footer>
+</div>
+</body>
+</html>
