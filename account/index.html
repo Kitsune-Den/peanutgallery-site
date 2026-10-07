@@ -85,6 +85,10 @@
   .note.warn { background: rgba(245, 177, 76, 0.12); border: 1px solid rgba(245, 177, 76, 0.4); }
   .note.bad { background: rgba(239, 107, 91, 0.12); border: 1px solid rgba(239, 107, 91, 0.4); }
 
+  .steps { margin: 14px 0 0 22px; display: grid; gap: 10px; }
+  .steps li::marker { color: var(--peanut); font-weight: 800; }
+  .steps b { color: var(--ink); }
+
   [hidden] { display: none !important; }
   footer { padding: 60px 0 36px; text-align: center; color: var(--muted); font-size: 14px; }
 </style>
@@ -132,6 +136,18 @@
     <p class="muted" id="manage-note" style="margin-top: 8px" hidden>Change plan, update your card or cancel, on Stripe. Cancelling keeps your plan until the end of the month you've paid for.</p>
   </section>
 
+  <section class="card" id="app" hidden>
+    <h2>Get the app</h2>
+    <p class="muted">Peanut Gallery runs on Windows, next to OBS.</p>
+    <p style="margin-top: 16px"><button class="btn" id="download" type="button">Download for Windows</button></p>
+    <ol class="steps muted">
+      <li><b>Run the installer.</b> It isn't code-signed yet, so Windows may say "Windows protected your PC": click "More info", then "Run anyway".</li>
+      <li><b>Connect Twitch</b> in the app's Setup tab, as <b id="app-login"></b>. Your plan comes with it.</li>
+      <li><b>Add the overlay to OBS.</b> Copy the overlay URL from the app's Live tab into a Browser Source (1920x1080, "Control audio via OBS"), and set its Audio Monitoring to "Monitor and Output" to hear it yourself.</li>
+      <li><b>Go live.</b> The co-host talks while your Twitch channel is live.</li>
+    </ol>
+  </section>
+
   <footer>
     <p><a href="/">peanutgallery.gg</a> · your AI cov-host, by Kitsune Den</p>
     <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></p>
@@ -157,6 +173,11 @@
     get: (k) => { try { return sessionStorage.getItem(k); } catch { return null; } },
     set: (k, v) => { try { v == null ? sessionStorage.removeItem(k) : sessionStorage.setItem(k, v); } catch {} },
   };
+
+  const PAYING = ["active", "trialing", "past_due"];
+  const isPaying = (b) => !!(b && b.subscription && PAYING.includes(b.subscription.status));
+  // While a new plan is being switched on, so Subscribe can't start a second one.
+  let switchingOn = false;
 
   function hm(minutes) {
     const h = Math.floor(minutes / 60), m = minutes % 60;
@@ -235,7 +256,7 @@
 
   function showSignedOut() {
     $("loading").hidden = true;
-    $("who").hidden = $("time").hidden = $("plan").hidden = true;
+    $("who").hidden = $("time").hidden = $("plan").hidden = $("app").hidden = true;
     $("signin").hidden = false;
   }
 
@@ -263,7 +284,7 @@
   function showPlan(b) {
     $("tier").textContent = TIERS[b.tier] || b.tier;
     const status = b.subscription && b.subscription.status;
-    const paying = ["active", "trialing", "past_due"].includes(status);
+    const paying = isPaying(b);
     $("past-due").hidden = status !== "past_due";
     $("manage-row").hidden = $("manage-note").hidden = !b.can_manage;
     const t = b.topup;
@@ -274,6 +295,7 @@
     let line = "";
     if (b.tier === "founding") line = "Free during the beta, with Professional's hours. Thank you for helping us build it.";
     else if (paying) line = "Billed monthly through Stripe.";
+    else if (switchingOn) line = "Switching your new plan on…";
     else if (!open) line = "Subscriptions open soon.";
     else if (b.tier === "free") line = "Pick a plan for more co-host time each month.";
     $("plan-line").textContent = line;
@@ -299,7 +321,7 @@
       go.className = "btn";
       go.type = "button";
       go.textContent = "Subscribe";
-      go.disabled = !p.available;
+      go.disabled = !p.available || switchingOn;
       go.addEventListener("click", () => toStripe("/v1/billing/checkout", { tier: p.tier }, go));
       card.append(h, price, about, go);
       grid.append(card);
@@ -324,12 +346,13 @@
     if (!store.get("pg")) return showSignedOut();
     try {
       const [u, b] = await Promise.all([api("/v1/me"), api("/v1/billing")]);
-      $("login").textContent = u.login;
+      $("login").textContent = $("app-login").textContent = u.login;
       showTime(u);
       showPlan(b);
       $("loading").hidden = $("signin").hidden = true;
       $("who").hidden = $("time").hidden = $("plan").hidden = false;
-      return b;
+      $("app").hidden = !b.download;
+      return { u, b };
     } catch (e) {
       if (e.status === 401) {
         store.set("pg", null);
@@ -340,23 +363,74 @@
     }
   }
 
+  const pause = () => new Promise((r) => setTimeout(r, 2000));
+
   // Back from Checkout: the webhook usually lands within seconds, so look a
-  // few more times until the plan shows.
+  // few more times until it shows. Checkout opened from the app comes back to
+  // a tab that isn't signed in: the result waits here through the sign-in.
   async function afterCheckout(first) {
     const q = new URLSearchParams(location.search);
-    const result = q.get("checkout");
+    const result = q.get("checkout") || store.get("checkout");
     if (!result) return;
     history.replaceState(null, "", location.pathname);
-    if (result === "cancelled") return notice("warn", "Checkout was cancelled. Nothing was charged.");
-    if (result === "topup") return notice("good", "Thank you! Your extra hours are added as soon as Stripe confirms, usually within seconds.");
-    notice("good", "Thank you! Your plan is being switched on.");
-    let b = first;
-    for (let i = 0; i < 10 && b && !b.subscription; i++) {
-      await new Promise((r) => setTimeout(r, 2000));
-      b = await load();
+    if (result === "cancelled") {
+      store.set("checkout", null);
+      return notice("warn", "Checkout was cancelled. Nothing was charged.");
     }
-    notice("good", b && b.subscription ? "Thank you! Your plan is on. The app picks it up within a minute." : "Thank you! Your plan should show here in a minute; refresh to check.");
+    if (!first) {
+      store.set("checkout", result);
+      return notice("good", "Thank you! If you bought from the app, it picks it up within a minute. Sign in with Twitch to see it here.");
+    }
+    store.set("checkout", null);
+
+    if (result === "topup") {
+      notice("good", "Thank you! Adding your extra hours…");
+      const before = first.u.extra_minutes || 0;
+      let now = first;
+      for (let i = 0; i < 10 && now && (now.u.extra_minutes || 0) <= before; i++) {
+        await pause();
+        now = await load();
+      }
+      return notice("good", now && (now.u.extra_minutes || 0) > before
+        ? "Thank you! Your extra hours are added."
+        : "Thank you! Your extra hours are added as soon as Stripe confirms; refresh in a minute to see them.");
+    }
+
+    let now = first;
+    if (!isPaying(now.b)) {
+      switchingOn = true;
+      showPlan(now.b);
+      notice("good", "Thank you! Your plan is being switched on.");
+      for (let i = 0; i < 10 && now && !isPaying(now.b); i++) {
+        await pause();
+        now = await load();
+      }
+      switchingOn = false;
+      if (now) showPlan(now.b);
+    }
+    if (!now || !isPaying(now.b)) return notice("good", "Thank you! Your plan should show here in a minute; refresh to check.");
+    notice("good", now.b.download
+      ? "Thank you! Your plan is on. Get the app below to start."
+      : "Thank you! Your plan is on. The app picks it up within a minute.");
   }
+
+  // The newest installer, through a link the cloud signs for this account.
+  $("download").addEventListener("click", async (e) => {
+    const button = e.currentTarget;
+    button.disabled = true;
+    const label = button.textContent;
+    button.textContent = "Preparing your download…";
+    try {
+      const { url, version } = await api("/v1/app/download", { method: "POST" });
+      location.href = url;
+      button.textContent = `Downloading version ${version}`;
+    } catch (e) {
+      notice("bad", e.message);
+      button.textContent = label;
+    } finally {
+      setTimeout(() => { button.disabled = false; button.textContent = label; }, 4000);
+    }
+  });
 
   $("twitch").addEventListener("click", signIn);
   $("manage").addEventListener("click", (e) => toStripe("/v1/billing/portal", undefined, e.currentTarget));
