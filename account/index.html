@@ -124,6 +124,10 @@
     <p class="muted" id="plan-line"></p>
     <div class="note warn" id="past-due" hidden>Your last payment didn't go through. Stripe will try again; update your card in Manage billing.</div>
     <div class="plans" id="plans"></div>
+    <p style="margin-top: 16px" id="topup-row" hidden>
+      <button class="btn quiet" id="topup" type="button">Buy 10 more hours ($10)</button>
+      <span class="muted" style="margin-left: 8px">They last this month and the next.</span>
+    </p>
     <p style="margin-top: 16px" id="manage-row" hidden><button class="btn quiet" id="manage" type="button">Manage billing</button></p>
     <p class="muted" id="manage-note" style="margin-top: 8px" hidden>Change plan, update your card or cancel, on Stripe. Cancelling keeps your plan until the end of the month you've paid for.</p>
   </section>
@@ -250,7 +254,10 @@
         : `Free trial: ${hm(u.used_minutes)} of ${hm(cap)} used`;
     else if (u.state === "out") text.textContent = "Out of co-host time. Reactions mode stays on.";
     else text.textContent = `${hm(left)} left this month`;
-    $("resets").textContent = u.resets_at ? `Refills ${day(u.resets_at)}.` : "";
+    const extra = u.extra_minutes || 0;
+    $("resets").textContent =
+      (u.resets_at ? `Refills ${day(u.resets_at)}.` : "") +
+      (extra > 0 ? ` Includes ${hm(extra)} of extra hours you bought.` : "");
   }
 
   function showPlan(b) {
@@ -259,6 +266,9 @@
     const paying = ["active", "trialing", "past_due"].includes(status);
     $("past-due").hidden = status !== "past_due";
     $("manage-row").hidden = $("manage-note").hidden = !b.can_manage;
+    const t = b.topup;
+    $("topup-row").hidden = !(t && t.available);
+    if (t && t.available) $("topup").textContent = `Buy ${t.hours} more hours ($${t.price_usd.toFixed(2)})`;
 
     const open = b.plans.some((p) => p.available);
     let line = "";
@@ -338,6 +348,7 @@
     if (!result) return;
     history.replaceState(null, "", location.pathname);
     if (result === "cancelled") return notice("warn", "Checkout was cancelled. Nothing was charged.");
+    if (result === "topup") return notice("good", "Thank you! Your extra hours are added as soon as Stripe confirms, usually within seconds.");
     notice("good", "Thank you! Your plan is being switched on.");
     let b = first;
     for (let i = 0; i < 10 && b && !b.subscription; i++) {
@@ -349,6 +360,7 @@
 
   $("twitch").addEventListener("click", signIn);
   $("manage").addEventListener("click", (e) => toStripe("/v1/billing/portal", undefined, e.currentTarget));
+  $("topup").addEventListener("click", (e) => toStripe("/v1/billing/checkout", { tier: "topup" }, e.currentTarget));
   $("signout").addEventListener("click", async () => {
     const token = store.get("pg");
     store.set("pg", null);
