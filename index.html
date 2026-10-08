@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Peanut Gallery · your AI cov-host</title>
-<meta name="description" content="Peanut Gallery is an AI co-host for streamers. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay. Coming soon from Kitsune Den.">
+<meta name="description" content="Peanut Gallery is an AI co-host for streamers. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay. Start free, by Kitsune Den.">
 <meta name="theme-color" content="#17110d">
 <meta property="og:title" content="Peanut Gallery · your AI cov-host">
-<meta property="og:description" content="An AI co-host that watches your stream, heckles your plays and cheers your wins. Coming soon from Kitsune Den.">
+<meta property="og:description" content="An AI co-host that watches your stream, heckles your plays and cheers your wins. Start free, by Kitsune Den.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://peanutgallery.gg/">
 <meta property="og:image" content="https://peanutgallery.gg/og.png">
@@ -129,10 +129,15 @@
 
   /* Call to action */
   .cta {
-    display: inline-block; margin: 14px 0 0 10px; padding: 10px 20px; border-radius: 999px;
+    display: inline-block; margin: 14px 5px 0; padding: 10px 20px; border-radius: 999px;
     background: var(--peanut); color: #1b130d; font-weight: 800; font-size: 15px; text-decoration: none;
   }
   .cta:hover, .cta:focus-visible { background: var(--ember); }
+  .cta.quiet { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  .cta.quiet:hover, .cta.quiet:focus-visible { background: var(--bg-2); }
+  .start { text-align: center; }
+  .start .cta { margin: 22px 0 0; font-size: 17px; padding: 12px 28px; }
+  .start .needs { margin-top: 12px; color: var(--muted); font-size: 15px; }
 
   /* Voice samples on the cards */
   .hear {
@@ -167,48 +172,6 @@
   .faq details[open] summary::before { content: "\2212"; }
   .faq p { margin: 8px 0 0 1.2em; color: var(--muted); font-size: 16px; }
 
-  /* Waitlist */
-  .wl { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; max-width: 620px; margin: 26px auto 0; }
-  .wl input {
-    flex: 1 1 240px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line);
-    background: var(--bg-2); color: var(--ink); font: 16px "Nunito", sans-serif;
-  }
-  .wl input:focus { outline: 2px solid var(--peanut); outline-offset: 1px; }
-  .wl button {
-    flex: 0 0 auto; padding: 12px 22px; border: 0; border-radius: 12px; cursor: pointer;
-    background: var(--peanut); color: #1b130d; font: 800 16px "Nunito", sans-serif;
-  }
-  .wl button:hover, .wl button:focus-visible { background: var(--ember); }
-  .wl button[disabled] { opacity: 0.6; cursor: wait; }
-  .wl-msg { flex-basis: 100%; min-height: 1.5em; text-align: center; font-weight: 700; }
-  .wl-msg.ok { color: #9cc39a; }
-  .wl-msg.err { color: #ff8a7a; }
-  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-  /* Founding streamers */
-  .founding { max-width: 760px; margin: 28px auto 0; padding: 26px; border-radius: var(--radius); background: var(--bg-2); border: 1px solid rgba(242, 140, 56, 0.35); }
-  .perks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
-  .perk { padding: 14px; border-radius: 12px; background: var(--bg-3); }
-  .perk b { display: block; font: 600 17px/1.3 "Fredoka", sans-serif; }
-  .perk span { font-size: 14px; color: var(--muted); }
-  .apply { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .apply label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700; }
-  .apply .wide { grid-column: 1 / -1; }
-  .apply input, .apply select, .apply textarea {
-    padding: 11px 13px; border-radius: 12px; border: 1px solid var(--line);
-    background: var(--bg); color: var(--ink); font: 16px "Nunito", sans-serif;
-  }
-  .apply textarea { min-height: 96px; resize: vertical; }
-  .apply input:focus, .apply select:focus, .apply textarea:focus { outline: 2px solid var(--peanut); outline-offset: 1px; }
-  .apply button {
-    justify-self: start; padding: 12px 24px; border: 0; border-radius: 12px; cursor: pointer;
-    background: var(--peanut); color: #1b130d; font: 800 16px "Nunito", sans-serif;
-  }
-  .apply button:hover, .apply button:focus-visible { background: var(--ember); }
-  .apply button[disabled] { opacity: 0.6; cursor: wait; }
-  .apply .note { font-size: 13px; color: var(--muted); font-weight: 400; }
-
   @media (max-width: 900px) {
     .tiers { grid-template-columns: repeat(2, 1fr); }
     .gallery { grid-template-columns: repeat(2, 1fr); }
@@ -217,7 +180,6 @@
   }
   @media (max-width: 520px) {
     .tiers { grid-template-columns: 1fr; }
-    .perks, .apply { grid-template-columns: 1fr; }
     .cta { margin-left: 0; }
     header { padding-top: 48px; }
     .gallery { grid-template-columns: 1fr; }
@@ -237,8 +199,11 @@
     <img class="mascot" src="/peanut.webp" width="240" height="240" alt="Peanut, the fox">
     <h1>Peanut <span>Gallery</span></h1>
     <p class="tagline">Your AI cov-host. It watches your stream, heckles your plays and cheers your wins, out loud, right on your overlay.</p>
-    <div class="soon"><i aria-hidden="true"></i> Coming soon from Kitsune Den</div>
-    <a class="cta" href="#waitlist">Join the waitlist</a>
+    <div class="soon"><i aria-hidden="true"></i> Now open: 3 hours of the full co-host, free</div>
+    <div>
+      <a class="cta" href="/account/">Start free</a>
+      <a class="cta quiet" href="#pricing">See pricing</a>
+    </div>
 
     <div class="stream" aria-label="Example: a co-host reacting on a stream overlay">
       <div class="live">LIVE</div>
@@ -330,74 +295,31 @@
       </div>
     </div>
     <p class="packs">Need more time? Add <b>10 hours for $10</b> on any monthly plan. They last the month you buy them and the next.</p>
-    <p class="fine">Planned pricing in USD; it may change before launch. One free trial per Twitch channel. Co-host time is counted by the minute while the AI co-host is live; reactions mode is never counted.</p>
+    <p class="fine">Prices in USD, billed monthly through Stripe; any sales tax or VAT is added at checkout. Cancel any time. One free trial per Twitch channel. Co-host time is counted by the minute while the AI co-host is live; reactions mode is never counted.</p>
   </section>
 
-  <section class="wrap" id="founding">
-    <h2>Become a founding streamer</h2>
-    <p class="lead">We're picking a small group of streamers to use Peanut Gallery live before launch and tell us honestly what works and what doesn't.</p>
-    <div class="founding">
-      <div class="perks">
-        <div class="perk"><b>Early access</b><span>Stream with your co-host before anyone else.</span></div>
-        <div class="perk"><b>Professional, free</b><span>The top tier at no cost for the whole beta.</span></div>
-        <div class="perk"><b>A founding discount</b><span>A lower price when we launch.</span></div>
-      </div>
-      <form class="apply" id="apply" novalidate>
-        <label>Email<input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
-        <label>Your channel<input name="channel" type="text" required maxlength="80" placeholder="twitch.tv/you"></label>
-        <label>Where you stream
-          <select name="platform" required>
-            <option value="">Choose one</option>
-            <option value="twitch">Twitch</option>
-            <option value="youtube">YouTube</option>
-            <option value="kick">Kick</option>
-            <option value="other">Somewhere else</option>
-          </select>
-        </label>
-        <label>How often you stream
-          <select name="schedule" required>
-            <option value="">Choose one</option>
-            <option value="1-2">1 to 2 days a week</option>
-            <option value="3-4">3 to 4 days a week</option>
-            <option value="5+">5 or more days a week</option>
-          </select>
-        </label>
-        <label class="wide"><span>What you stream <span class="note">(optional)</span></span><input name="content" type="text" maxlength="200" placeholder="Cozy farming, horror, speedruns, just chatting..."></label>
-        <label class="wide">Why you'd like a co-host<textarea name="why" required maxlength="600" placeholder="What would it add to your stream?"></textarea></label>
-        <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
-        <p class="note wide">YouTube and Kick streamers are welcome: the co-host talks on any platform, though chat features start on Twitch. Applying also puts you on the waitlist, and we'll email you if you're picked.</p>
-        <button type="submit">Apply</button>
-        <p class="wl-msg wide" role="status" aria-live="polite"></p>
-      </form>
-    </div>
-  </section>
 
   <section class="wrap" id="faq">
     <h2>Questions</h2>
     <div class="faq">
-      <details><summary>What do I need to run it?</summary><p>A PC running OBS Studio. Peanut Gallery is a small desktop app that sits next to OBS, and the co-host appears as a Browser Source in your scenes.</p></details>
+      <details><summary>How do I start?</summary><p>Sign in with Twitch on <a href="/account/">your account page</a> and download the app. Every channel gets 3 hours of the full co-host free, and reactions mode stays free for good. Add the overlay to OBS, go live, and pick a plan when you want more.</p></details>
+      <details><summary>What do I need to run it?</summary><p>A Windows PC running OBS Studio. Peanut Gallery is a small desktop app that sits next to OBS, and the co-host appears as a Browser Source in your scenes.</p></details>
       <details><summary>Will it slow down my stream?</summary><p>It shouldn't. Your PC only takes the odd screenshot, plays the audio and shows the overlay. The heavy work (reading the screen, thinking, making the voice) happens on our servers, because your PC is busy enough already.</p></details>
-      <details><summary>Which platforms does it work with?</summary><p>Twitch at launch: it reads your chat, follows, raids, subs and channel-point redemptions. The overlay works in any OBS scene.</p></details>
+      <details><summary>Which platforms does it work with?</summary><p>Twitch: it reads your chat, follows, raids, subs and channel-point redemptions, and can answer viewers in chat. The overlay works in any OBS scene.</p></details>
       <details><summary>What does it see, and do you keep it?</summary><p>A screenshot of your stream every 15 to 30 seconds, sent to our screen-reading service so the co-host knows what's happening. We don't store them. A "blind" switch pauses capture whenever something private is on screen.</p></details>
       <details><summary>Can chat make it say anything?</summary><p>No. Chat is something the co-host reacts to, not a script it reads. Chat text-to-speech is off until you turn it on, works only through a channel-point reward or a command you choose, and every message is filtered, length-capped and rate-limited. Everything the co-host says passes a safety filter first, and a panic-mute hotkey silences it instantly.</p></details>
       <details><summary>Can I make my own co-host?</summary><p>Yes. Each co-host is a folder with a personality, a voice and art, so you can tweak one of the five or build your own.</p></details>
-      <details><summary>Does it work in Discord?</summary><p>Not at launch. A Kitsune Den Discord bot that brings your co-host into voice chat and keeps it around between streams is planned for later.</p></details>
-      <details><summary>When can I use it?</summary><p>Soon. Join the waitlist below and we'll email you when it opens, or apply above to be a founding streamer and try it first.</p></details>
+      <details><summary>Does it work in Discord?</summary><p>Not yet. A Kitsune Den Discord bot that brings your co-host into voice chat and keeps it around between streams is planned for later.</p></details>
+      <details><summary>Why does Windows warn me when I install it?</summary><p>The installer isn't code-signed yet, so Windows may say "Windows protected your PC". Click "More info", then "Run anyway". After that the app updates itself, and it only installs updates signed with our key.</p></details>
+      <details><summary>Can I cancel any time?</summary><p>Yes, from Manage billing on your account page. Your plan stays on until the end of the month you've paid for, then your account goes back to Free.</p></details>
     </div>
   </section>
 
-  <section class="wrap" id="waitlist">
-    <h2>Get in early</h2>
-    <p class="lead">Join the waitlist and we'll tell you when Peanut Gallery opens. We'll only use your email for that.</p>
-    <form class="wl" id="wl" novalidate>
-      <label class="sr" for="wl-email">Email</label>
-      <input id="wl-email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com">
-      <label class="sr" for="wl-channel">Your channel (optional)</label>
-      <input id="wl-channel" name="channel" type="text" maxlength="80" placeholder="Your channel (optional)">
-      <div class="hp" aria-hidden="true"><label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
-      <button type="submit">Join the waitlist</button>
-      <p class="wl-msg" role="status" aria-live="polite"></p>
-    </form>
+  <section class="wrap start" id="start">
+    <h2>Bring Peanut to your next stream</h2>
+    <p class="lead">Sign in with Twitch, download the app and go live with 3 free hours of the full co-host. Reactions mode stays free.</p>
+    <a class="cta" href="/account/">Start free</a>
+    <p class="needs">For Windows, with OBS Studio.</p>
   </section>
 
   <footer class="wrap">
@@ -486,75 +408,6 @@
     });
   });
   player.addEventListener("ended", stopVoice);
-
-  // Waitlist form.
-  const form = $("wl");
-  const msg = form.querySelector(".wl-msg");
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const email = form.email.value.trim();
-    msg.className = "wl-msg";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
-      msg.textContent = "That email doesn't look right.";
-      msg.classList.add("err");
-      form.email.focus();
-      return;
-    }
-    const btn = form.querySelector("button");
-    btn.disabled = true;
-    msg.textContent = "Adding you...";
-    try {
-      const res = await fetch("/api/waitlist", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, channel: form.channel.value.trim(), website: form.website.value }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Something went wrong. Try again in a bit.");
-      form.reset();
-      msg.textContent = "You're on the list. Peanut will be in touch!";
-      msg.classList.add("ok");
-    } catch (err) {
-      msg.textContent = err.message === "Failed to fetch" ? "Couldn't reach us. Try again in a bit." : err.message;
-      msg.classList.add("err");
-    } finally {
-      btn.disabled = false;
-    }
-  });
-
-  // Founding streamer applications.
-  const app = $("apply");
-  const appMsg = app.querySelector(".wl-msg");
-  app.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const v = (k) => app.elements[k].value.trim();
-    const fail = (text, field) => { appMsg.className = "wl-msg wide err"; appMsg.textContent = text; if (field) app.elements[field].focus(); };
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v("email"))) return fail("That email doesn't look right.", "email");
-    if (!v("channel")) return fail("Tell us where you stream.", "channel");
-    if (!v("platform")) return fail("Pick where you stream.", "platform");
-    if (!v("schedule")) return fail("Pick how often you stream.", "schedule");
-    if (v("why").length < 10) return fail("Tell us a little about why you'd like a co-host.", "why");
-    const btn = app.querySelector("button");
-    btn.disabled = true;
-    appMsg.className = "wl-msg wide";
-    appMsg.textContent = "Sending...";
-    try {
-      const res = await fetch("/api/apply", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(["email", "channel", "platform", "schedule", "content", "why", "website"].map((k) => [k, v(k)]))),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Something went wrong. Try again in a bit.");
-      app.reset();
-      appMsg.className = "wl-msg wide ok";
-      appMsg.textContent = "Thanks! Your application is in, and you're on the waitlist.";
-    } catch (err) {
-      fail(err.message === "Failed to fetch" ? "Couldn't reach us. Try again in a bit." : err.message);
-    } finally {
-      btn.disabled = false;
-    }
-  });
 </script>
 </body>
 </html>
