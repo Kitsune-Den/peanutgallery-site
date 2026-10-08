@@ -293,7 +293,9 @@
 
     const open = b.plans.some((p) => p.available);
     let line = "";
-    if (b.tier === "founding") line = "Free during the beta, with Professional's hours. Thank you for helping us build it.";
+    if (b.tier === "founding" && b.founding_until)
+      line = `Free with Professional's hours until the end of ${new Date(b.founding_until + "T12:00:00Z").toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}. After that, any plan is 30% off for you, for as long as you subscribe.`;
+    else if (b.tier === "founding") line = "Free during the beta, with Professional's hours. Thank you for helping us build it.";
     else if (paying) line = "Billed monthly through Stripe.";
     else if (switchingOn) line = "Switching your new plan on…";
     else if (!open) line = "Subscriptions open soon.";
